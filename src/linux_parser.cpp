@@ -8,6 +8,7 @@
 #include <vector>
 
 using std::stof;
+using std::stol;
 using std::string;
 using std::to_string;
 using std::vector;
@@ -68,11 +69,38 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { return 0.0; }
+float LinuxParser::MemoryUtilization() {
+  string line, key, value;
+  float memTotal, memAvailable;
+  std::ifstream filestream(kProcDirectory + kMeminfoFilename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::istringstream linestream(line);
+      while (linestream >> key >> value) {
+        if (key == "MemTotal:") {
+          memTotal = stof(value);
+        } else if (key == "MemAvailable:") {
+          memAvailable = stof(value);
+        }
+      }
+    }
+  }
+  return (memTotal - memAvailable)/memTotal; 
+}
 
-// TODO: Read and return the system uptime
-long LinuxParser::UpTime() { return 0; }
+long LinuxParser::UpTime() {
+  string line, upTime, idleTime;
+  long upTime;
+  std::ifstream filestream(kProcDirectory + kMeminfoFilename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::istringstream linestream(line);
+      while (linestream >> upTime) {
+        return stol(upTime);
+      }
+    }
+  }
+}
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { return 0; }
