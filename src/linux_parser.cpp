@@ -229,7 +229,9 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);
       while (linestream >> key >> value) {
         if (key == "VmSize:") {
-          return to_string(stof(value) / 1000);
+          char formattedRam[64];
+          sprintf(formattedRam, "%.2f", to_string(stof(value) / 1000));
+          return formattedRam;
         }
       }
     }
