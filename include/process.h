@@ -23,6 +23,7 @@ class Process {
   std::string _command;
   long _lastActiveJiffies{-1};
   long _lastTotalJiffies{-1};
+  float _lastUtilization;
 };
 
 #endif

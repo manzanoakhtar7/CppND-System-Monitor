@@ -29,6 +29,7 @@ float Process::CpuUtilization() {
   }
   _lastActiveJiffies = activeJiffies;
   _lastTotalJiffies = totalJiffies;
+  _lastUtilization = utilization;
   return utilization;
 }
 
@@ -47,6 +48,5 @@ long int Process::UpTime() { return LinuxParser::UpTime(_pid); }
 
 // TODO
 bool Process::operator<(Process const& a) const {
-  // return this->CpuUtilization() < a.CpuUtilization();
-  return true;
+  return this->_lastUtilization < a._lastUtilization;
 }
