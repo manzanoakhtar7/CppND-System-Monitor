@@ -12,11 +12,8 @@
 #include "process.h"
 #include "processor.h"
 
-using std::set;
-using std::size_t;
-using std::sort;
-using std::string;
-using std::vector;
+using namespace std;
+
 /*You need to complete the mentioned TODOs in order to satisfy the rubric
 criteria "The student will be able to extract and display basic data about the
 system."
@@ -35,6 +32,7 @@ vector<Process>& System::Processes() {
     }
   }
   sort(processes_.begin(), processes_.end());
+  reverse(processes_.begin(), processes_.end());
   return processes_;
 }
 
