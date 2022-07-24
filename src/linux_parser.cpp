@@ -105,13 +105,13 @@ long LinuxParser::UpTime() {
 long LinuxParser::Jiffies() {
   string line, cpu, user, nice, system, idle, iowait, irq, softirq, steal,
       guest, guest_nice;
-  std::ifstream filestream(kProcDirectory + kUptimeFilename);
+  std::ifstream filestream(kProcDirectory + kStatFilename);
   if (filestream.is_open()) {
     if (std::getline(filestream, line)) {
       std::istringstream linestream(line);
       if (linestream >> cpu >> user >> nice >> system >> idle >> iowait >>
           irq >> softirq >> steal >> guest >> guest_nice) {
-        return stol(cpu) + stol(user) + stol(nice) + stol(system) + stol(idle) +
+        return stol(user) + stol(nice) + stol(system) + stol(idle) +
                stol(iowait) + stol(irq) + stol(softirq) + stol(steal) +
                stol(guest) + stol(guest_nice);
       }
@@ -140,13 +140,13 @@ long LinuxParser::ActiveJiffies(int pid) {
 long LinuxParser::ActiveJiffies() {
   string line, cpu, user, nice, system, idle, iowait, irq, softirq, steal,
       guest, guest_nice;
-  std::ifstream filestream(kProcDirectory + kUptimeFilename);
+  std::ifstream filestream(kProcDirectory + kStatFilename);
   if (filestream.is_open()) {
     if (std::getline(filestream, line)) {
       std::istringstream linestream(line);
       if (linestream >> cpu >> user >> nice >> system >> idle >> iowait >>
           irq >> softirq >> steal >> guest >> guest_nice) {
-        return stol(cpu) + stol(user) + stol(nice) + stol(system) + stol(irq) +
+        return stol(user) + stol(nice) + stol(system) + stol(irq) +
                stol(softirq) + stol(steal) + stol(guest) + stol(guest_nice);
       }
     }
