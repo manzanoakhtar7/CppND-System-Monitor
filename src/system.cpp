@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 
+#include <algorithm>
 #include <cstddef>
 #include <set>
 #include <string>
@@ -13,6 +14,7 @@
 
 using std::set;
 using std::size_t;
+using std::sort;
 using std::string;
 using std::vector;
 /*You need to complete the mentioned TODOs in order to satisfy the rubric
@@ -30,7 +32,7 @@ vector<Process>& System::Processes() {
   for (int pid : pids) {
     processes_.emplace_back(Process(pid));
   }
-
+  sort(processes_.begin(), processes_.end());
   return processes_;
 }
 

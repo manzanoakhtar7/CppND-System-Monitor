@@ -46,7 +46,6 @@ string Process::User() { return LinuxParser::User(_pid); }
 
 long int Process::UpTime() { return LinuxParser::UpTime(_pid); }
 
-// TODO
 bool Process::operator<(Process const& a) const {
   return this->_lastUtilization < a._lastUtilization;
 }
