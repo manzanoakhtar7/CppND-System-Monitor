@@ -28,10 +28,10 @@ Processor& System::Cpu() { return cpu_; }
 vector<Process>& System::Processes() {
   processes_.clear();
   vector<int> pids = LinuxParser::Pids();
-  for (int pid : pids){
+  for (int pid : pids) {
     processes_.emplace_back(Process(pid));
   }
-  
+
   return processes_;
 }
 

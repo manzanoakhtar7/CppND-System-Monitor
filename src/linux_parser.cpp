@@ -283,7 +283,7 @@ long LinuxParser::UpTime(int pid) {
           tty_nr >> tpgid >> flags >> minflt >> cminflt >> majflt >> cmajflt >>
           utime >> stime >> cutime >> cstime >> priority >> nice >>
           num_threads >> itrealvalue >> starttime) {
-        return UpTime() - (stol(starttime)/sysconf(_SC_CLK_TCK));
+        return UpTime() - (stol(starttime) / sysconf(_SC_CLK_TCK));
       }
     }
   }

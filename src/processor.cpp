@@ -1,7 +1,7 @@
 #include "processor.h"
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "linux_parser.h"
 
@@ -12,9 +12,9 @@ float Processor::Utilization() {
   long activeJiffies = LinuxParser::ActiveJiffies();
   long totalJiffies = LinuxParser::Jiffies();
   if (_lastActiveJiffies == -1 && _lastTotalJiffies == -1) {
-    utilization = activeJiffies / totalJiffies;
+    utilization = activeJiffies * 1.0 / totalJiffies;
   } else {
-    utilization = (activeJiffies - _lastActiveJiffies) /
+    utilization = (activeJiffies - _lastActiveJiffies) * 1.0 /
                   (totalJiffies - _lastTotalJiffies);
   }
   _lastActiveJiffies = activeJiffies;

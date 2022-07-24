@@ -22,9 +22,9 @@ float Process::CpuUtilization() {
   long activeJiffies = LinuxParser::ActiveJiffies(_pid);
   long totalJiffies = LinuxParser::Jiffies();
   if (_lastActiveJiffies == -1 && _lastTotalJiffies == -1) {
-    utilization = activeJiffies / totalJiffies;
+    utilization = activeJiffies * 1.0 / totalJiffies;
   } else {
-    utilization = (activeJiffies - _lastActiveJiffies) /
+    utilization = (activeJiffies - _lastActiveJiffies) * 1.0 /
                   (totalJiffies - _lastTotalJiffies);
   }
   _lastActiveJiffies = activeJiffies;
