@@ -26,7 +26,7 @@ Processor& System::Cpu() { return cpu_; }
 vector<Process>& System::Processes() {
   vector<int> pids(LinuxParser::Pids());
   for (int pid : pids) {
-    if (_pids.find(pid) != _pids.end()) {
+    if (_pids.find(pid) == _pids.end()) {
       _pids.emplace(pid);
       processes_.emplace_back(Process(pid));
     }
