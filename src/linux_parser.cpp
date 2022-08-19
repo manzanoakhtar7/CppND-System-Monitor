@@ -218,7 +218,7 @@ string LinuxParser::Command(int pid) {
       }
     }
   }
-  return 0;
+  return string();
 }
 
 string LinuxParser::Ram(int pid) {
@@ -236,7 +236,7 @@ string LinuxParser::Ram(int pid) {
       }
     }
   }
-  return 0;
+  return string();
 }
 
 string LinuxParser::Uid(int pid) {
@@ -252,7 +252,7 @@ string LinuxParser::Uid(int pid) {
       }
     }
   }
-  return 0;
+  return string();
 }
 
 string LinuxParser::User(int pid) {
