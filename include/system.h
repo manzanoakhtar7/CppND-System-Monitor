@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <set>
+#include <map>
 
 #include "process.h"
 #include "processor.h"
@@ -19,11 +19,10 @@ class System {
   std::string Kernel();               // TODO: See src/system.cpp
   std::string OperatingSystem();      // TODO: See src/system.cpp
 
-  // TODO: Define any necessary private members
  private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
-  std::set<int> _pids = {};
+  std::map<int, Process> processMap_ = {};
 };
 
 #endif

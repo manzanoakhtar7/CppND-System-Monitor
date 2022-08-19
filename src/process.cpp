@@ -13,39 +13,44 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Process::Process(int pid) : _pid(pid) {}
+Process::Process(int pid) : pid_(pid) {}
 
-int Process::Pid() { return _pid; }
+int Process::Pid() { return pid_; }
 
 float Process::CpuUtilization() {
   float utilization;
-  long activeJiffies = LinuxParser::ActiveJiffies(_pid);
-  long totalJiffies = LinuxParser::Jiffies();
-  if (_lastActiveJiffies == -1 && _lastTotalJiffies == -1) {
-    utilization = activeJiffies * 1.0 / totalJiffies;
+  if ((UpTime() - lastUpdated_) > 0) {
+    long activeJiffies = LinuxParser::ActiveJiffies(pid_);
+    long totalJiffies = LinuxParser::Jiffies();
+    if (lastActiveJiffies_ == -1 && lastTotalJiffies_ == -1) {
+      utilization = activeJiffies * 1.0 / totalJiffies;
+    } else {
+      utilization = (activeJiffies - lastActiveJiffies_) * 1.0 /
+                    (totalJiffies - lastTotalJiffies_);
+    }
+    lastActiveJiffies_ = activeJiffies;
+    lastTotalJiffies_ = totalJiffies;
+    lastUtilization_ = utilization;
   } else {
-    utilization = (activeJiffies - _lastActiveJiffies) * 1.0 /
-                  (totalJiffies - _lastTotalJiffies);
+    utilization = lastUtilization_;
   }
-  _lastActiveJiffies = activeJiffies;
-  _lastTotalJiffies = totalJiffies;
-  _lastUtilization = utilization;
+  lastUpdated_ = UpTime();
   return utilization;
 }
 
 string Process::Command() {
-  if (_command.empty()) {
-    _command = LinuxParser::Command(_pid);
+  if (command_.empty()) {
+    command_ = LinuxParser::Command(pid_);
   }
-  return _command;
+  return command_;
 }
 
-string Process::Ram() { return LinuxParser::Ram(_pid); }
+string Process::Ram() { return LinuxParser::Ram(pid_); }
 
-string Process::User() { return LinuxParser::User(_pid); }
+string Process::User() { return LinuxParser::User(pid_); }
 
-long int Process::UpTime() { return LinuxParser::UpTime(_pid); }
+long int Process::UpTime() {return LinuxParser::UpTime(pid_); }
 
 bool Process::operator<(Process const& a) const {
-  return this->_lastUtilization < a._lastUtilization;
+  return this->lastUtilization_ < a.lastUtilization_;
 }

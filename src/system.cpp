@@ -24,15 +24,18 @@ format. cpp for formatting the uptime.*/
 Processor& System::Cpu() { return cpu_; }
 
 vector<Process>& System::Processes() {
+  processes_.clear();
   vector<int> pids(LinuxParser::Pids());
   for (int pid : pids) {
-    if (_pids.find(pid) == _pids.end()) {
-      _pids.emplace(pid);
-      processes_.emplace_back(Process(pid));
+    if (processMap_.find(pid) == processMap_.end()) {
+      processMap_.insert({pid, Process(pid)});
     }
+    processes_.push_back(processMap_.at(pid));
+    processes_.back().CpuUtilization();
   }
   sort(processes_.begin(), processes_.end());
   reverse(processes_.begin(), processes_.end());
+  
   return processes_;
 }
 
