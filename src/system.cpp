@@ -35,7 +35,7 @@ vector<Process>& System::Processes() {
   }
   sort(processes_.begin(), processes_.end());
   reverse(processes_.begin(), processes_.end());
-  
+
   return processes_;
 }
 
